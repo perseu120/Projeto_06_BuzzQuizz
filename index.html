@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <!-- tegs referente a importação e configuração do html -->
 <head>
     <meta charset="UTF-8">
@@ -10,15 +10,32 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
 
-    <title></title>
+    <title>BuzzQuizz</title>
 
 </head>
 
 <body>
-
+    <div class="Container">
+        <header>
+            <h1>BuzzQuizz</h1>
+        </header>
+        <main>
+            <h3>Comece pelo começo</h3>
+            <img src="https://static.wikia.nocookie.net/irmaodojorel/images/8/8b/Fullimage_juju.png/revision/latest?cb=20190228134134&path-prefix=pt-br" alt="">
+            <div class="PerguntasBasicas">
+                <input class="Title" type="text" placeholder="Título do seu quizz">
+                <input class="URL" type="text" placeholder="URL da imagem do seu quizz">
+                <input class="QuantPerg" type="text" placeholder="Quantidade de perguntas do quizz">
+                <input class="QuantNiv" type="text" placeholder="Quantidade de níveis do quizz">
+            </div>
+            <button onclick="processarInfoBasicas()">Prosseguir pra criar perguntas</button>
+        </main>
+    </div>
     
+
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="js/script.js"></script>
