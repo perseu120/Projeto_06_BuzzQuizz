@@ -19,7 +19,8 @@ h3 {
 
 
 body {
-    background-color: #FAFAFA;
+    background: #E5E5E5;
+
 }
 
 header {
@@ -40,7 +41,6 @@ header {
 .Container{
     font-family: 'Roboto', sans-serif;
     position: relative;
-
     padding: 140px 0 0 0;
     min-height: 100%;
 
@@ -51,12 +51,13 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 150px;
+    
 }
 
 main > div {
     width: 600px;
     height: 256px;
-    background-color: #FFFFFF;
     padding: 21px 20px 15px 16px;
     display: flex;
     flex-direction: column;
@@ -76,7 +77,6 @@ input {
     border-style: solid;
     box-shadow: none;
     border-radius: 5px;
-    
     outline: none;
 }
 
@@ -86,7 +86,7 @@ input::placeholder {
     color: #BABABA;
   }
 
-button {
+.irParaPerguntas {
     width: 368px;
     height: 54px;
     background-color: #EC362D;
@@ -99,3 +99,89 @@ button {
     box-shadow: none;
 
 }
+/*Inicio estilos da tela 1 exibição de quizz*/
+.btnCriarQuiz{
+
+    width: 150px;
+    height: 40px;
+    background: #FAFAFA;
+    border: 1px dashed #EC362D;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #EC362D;
+    margin: 20px auto;
+
+}
+
+.criarQuizz{
+    width: 1051px;
+    height: 181px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #D5D5D5;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+}
+aside{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 5px;
+    position: relative;
+    
+}
+aside img {
+    
+    width: 340px;
+    height: 181px;
+    border-radius: 5px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url(image.png);
+}
+aside p {
+    bottom: 0px;
+    z-index: 1;
+    position: absolute;
+    width: 301px;
+    height: 54px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+
+}
+
+.exibiQuizz{
+    display: flex;
+    flex-wrap: wrap;
+    width: 1051px;
+
+}
+
+.gradiente{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 180px;
+    border-radius: 5px;
+    background: rgb(244, 244, 244);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%)
+
+}
+/*Fim estilos da tela 1 exibição de quizz*/

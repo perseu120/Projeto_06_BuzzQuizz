@@ -8,7 +8,7 @@ let res
 criarQuizz ();
 
 function criarQuizz () {
-    infoBasicas();
+    //infoBasicas();
 }
 
 function infoBasicas () {
