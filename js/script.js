@@ -23,8 +23,6 @@ let respostaIncorreta3
 let urlIncorreta3 
 
 
-criarQuizz ();
-//criarPerguntasQuizz()
 
 function criarQuizz () {
     infoBasicas();
@@ -42,7 +40,7 @@ function infoBasicas () {
         <input class="QuantPerg" type="text" placeholder="Quantidade de perguntas do quizz">
         <input class="QuantNiv" type="text" placeholder="Quantidade de níveis do quizz">
     </div>
-    <button onclick="processarInfoBasicas()">Prosseguir pra criar perguntas</button>`
+    <button class="irParaPerguntas" onclick="processarInfoBasicas()">Prosseguir pra criar perguntas</button>`
 
    
 }
@@ -139,7 +137,7 @@ let isImgLink = (urlQuizz) => {
         criarPerguntasFechadas ()
     }
     else{
-        Main.innerHTML += `<button onclick="processarInfoBasicas()">Prosseguir pra criar perguntas</button>` 
+        Main.innerHTML += `<button class="irParaPerguntas" onclick="processarInfoBasicas()">Prosseguir pra criar perguntas</button>` 
     }
 
 }
@@ -158,7 +156,7 @@ function criarPerguntasFechadas () {
         </div> `
     }
 
-    Main.innerHTML += `<button onclick="processarPerguntasQuizz()">Prosseguir pra criar níveis</button>`
+    Main.innerHTML += `<button class="irParaPerguntas" onclick="processarPerguntasQuizz()">Prosseguir pra criar níveis</button>`
 } 
 
 
