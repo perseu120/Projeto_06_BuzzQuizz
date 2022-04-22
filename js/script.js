@@ -2,13 +2,19 @@
 let tituloQuizz = "";
 let urlQuizz = "";
 let quantidadePerguntas = 0;
-let quantidadeNiveis = 0;
+let quantidadeNiveis = 2;
 let res
 let numeroPergunta = 0
+let ErroNivelQuizz
 let ErroPerguntasQuizz
 let novoQuizz = {title: "",
                  imgage: "",
-                 questions: []}
+                 questions: [],
+                 levels: []  }
+
+let numeroNivel = 0
+let CondicaoNivel
+
 
 // Inputs CriandoQuizz - Perguntas
 let textoPergunta 
@@ -22,8 +28,14 @@ let urlIncorreta2
 let respostaIncorreta3 
 let urlIncorreta3 
 
+// Inputs NiveisQuizz
+let tituloNivel
+let porcenNivel
+let urlNivel
+let descricaoNivel
 
 
+criarNiveisQuizz()
 function criarQuizz () {
     infoBasicas();
 }
@@ -56,7 +68,8 @@ function processarInfoBasicas() {
 
         novoQuizz = {title: "tituloQuizz",
                  imgage: "urlQuizz",
-                 questions: []}
+                 questions: [],
+                 levels: []   }
         criarPerguntasQuizz();
 
     }
@@ -363,6 +376,154 @@ function verificarSeInputsValidos () {
             ErroPerguntasQuizz = true
             console.log("erro url3")
         }
+    }
+
+}
+
+function criarNiveisQuizz() {
+    
+    let Main = document.querySelector("main");
+    
+    Main.innerHTML = `
+    <h3 class="perguntasH3">Agora, decida os níveis</h3>        
+    <div class="Nivel1 NiveisAberto">
+        <h3>Nível 1</h3>
+        <input class="tituloNivel" type="text" placeholder="Título do nível">
+        <input class="porcenNivel" type="text" placeholder="% de acerto mínima">
+        <input class="urlNivel" type="text" placeholder="URL da imagem do nível">
+        <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
+    </div>
+    `
+    if (quantidadeNiveis > 1) {
+        criarNiveisFechados ();
+    }
+     else{
+            Main.innerHTML += `<button class="irParaPerguntas" onclick="finalizaQuizz()">
+                                Finalizar Quizz</button>` 
+     }
+    
+    
+}
+
+function criarNiveisFechados () {
+    
+    let Main = document.querySelector("main");
+
+    for (let i = 2; i <= quantidadeNiveis; i++){
+
+        Main.innerHTML += `            
+        <div class="Nivel${i} PerguntasFechado">
+            <h3>Nível ${i}</h3>
+            <ion-icon onclick="abrirCardNivel (this)" name="reader-outline"></ion-icon>
+        </div> `
+    }
+
+    Main.innerHTML += `<button class="irParaPerguntas" onclick="finalizaQuizz()">
+                        Finalizar Quizz</button>`
+
+
+
+}
+
+function abrirCardNivel (Selecionado) {
+
+    Selecionado.classList.add("Invisivel")
+    Selecionado = Selecionado.parentElement
+
+    Selecionado.classList.remove("PerguntasFechado")
+
+    let classe =  Selecionado.classList.value
+    console.log(classe);
+    numeroNivel= Number(classe.replace('Nivel', ''));
+    console.log(numeroNivel);
+
+    Selecionado.classList.add("NiveisAberto")
+
+    Selecionado.innerHTML = `                      
+            <h3>Nível ${numeroNivel}</h3>
+            <input class="tituloNivel" type="text" placeholder="Título do nível">
+            <input class="porcenNivel" type="text" placeholder="% de acerto mínima">
+            <input class="urlNivel" type="text" placeholder="URL da imagem do nível">
+            <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
+    `
+}
+
+function finalizaQuizz(){
+
+    CondicaoNivel = false
+    ErroNivelQuizz = false
+
+    for (let i = 1; i <= quantidadeNiveis; i++) {
+
+
+        let Nivel = document.querySelector(`.Nivel${i}`);
+
+
+        tituloNivel = Nivel.querySelector(".tituloNivel").value;
+        porcenNivel = Nivel.querySelector(".porcenNivel").value;
+        urlNivel = Nivel.querySelector(".urlNivel").value;
+        descricaoNivel = Nivel.querySelector(".descricaoNivel").value;
+        
+        validarInputsNiveis ()
+
+
+        novoQuizz.levels.push(	{
+            title: tituloNivel,
+            image: urlNivel,
+            text: descricaoNivel,
+            minValue: porcenNivel
+        })
+
+        let estaFechado = document.querySelector(".PerguntasFechado")
+
+        if (estaFechado){
+            novoQuizz.levels = []
+            alert("Existem Niveis não preenchidos")
+        }
+
+
+    }
+    if (ErroNivelQuizz || !CondicaoNivel) {
+    
+        novoQuizz.levels = []
+        alert("Algo errado, tente novamente");
+    
+    }
+}
+
+function validarInputsNiveis () {
+
+    console.log("0")
+
+    if (tituloNivel.length < 10) {
+
+        console.log("1")
+        ErroNivelQuizz = true
+    }
+
+    if ( 100 < porcenNivel < 0 ) {
+
+        console.log("2")
+        ErroNivelQuizz = true
+        
+    }
+
+    if ( !(isImgLink(urlNivel))) {
+
+        console.log("3")
+        ErroNivelQuizz = true
+    }
+
+    if (descricaoNivel < 30) {
+
+        console.log("4")
+        ErroNivelQuizz = true
+    }
+
+    if(Number(porcenNivel) === 0){
+
+        console.log("5")
+        CondicaoNivel = true
     }
 
 }

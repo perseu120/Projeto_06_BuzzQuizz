@@ -54,8 +54,6 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 150px;
-    
 }
 
 .Invisivel {
@@ -151,6 +149,15 @@ button.irParaPerguntas {
     box-shadow: none;
 
 }
+
+.NiveisAberto {
+    width: 600px;
+    height: 316px;
+    background-color: #FFFFFF;
+    padding: 27px 20px 28px 16px;
+    margin-bottom: 27px;
+}
+
 
 /*Inicio estilos da tela 1 exibição de quizz*/
 .btnCriarQuiz{
