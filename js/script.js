@@ -4,16 +4,19 @@ let urlQuizz = "";
 let quantidadePerguntas = 0;
 let quantidadeNiveis = 0;
 let res
+const Main = document.querySelector(".main");
 
 criarQuizz ();
 
 function criarQuizz () {
-    //infoBasicas();
+    infoBasicas();
+    //telaCriarExibirQuizz();
+    
 }
 
 function infoBasicas () {
 
-    let Main = document.querySelector("main");
+    
 
     Main.innerHTML = `
     <h3>Comece pelo começo</h3>
@@ -84,3 +87,63 @@ let isImgLink = (urlQuizz) => {
     }
     return (urlQuizz.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) !== null);
   }
+
+function telaCriarExibirQuizz(){
+
+    Main.innerHTML = `<div class="containerQuizz">
+                
+        ${quizzUsuario()}
+
+        ${todosQuizz()}
+                
+
+    </div>`
+
+}
+
+function quizzUsuario(){
+
+    return `
+        <div class="criarQuizz">
+
+            <div>
+                <p class="prgCriarQuiz">você não criou nenhum quizz ainda :(</p>
+
+                <button class="btnCriarQuiz">Criar Quizz</button>
+            </div>
+                    
+        </div> `
+    
+}
+
+function todosQuizz(){
+
+    return  `
+    <section class="Quizz">
+        <h4>Todos os Quizzes</h4>
+
+        <div class="exibiQuizz">
+
+            ${cardQuizz()}
+            ${cardQuizz()}
+            ${cardQuizz()}
+                        
+        </div>
+
+    </section>
+    `
+}
+
+function cardQuizz(){
+
+        return `
+        <aside class="box-quizz">
+
+            <img src="http://disneyplusbrasil.com.br/wp-content/uploads/2022/01/Os-Simpsons-Disney-Plus.jpg">
+            <p>Acerte os personagens corretos </br>dos Simpsons e prove seu amor!</p>
+            <div class="gradiente"></div>
+
+        </aside>
+        `
+
+}

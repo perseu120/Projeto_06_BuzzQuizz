@@ -16,6 +16,15 @@ h3 {
     font-weight: bold;    
     margin-bottom: 27px;
 }
+h4 {
+    font-size: 1em;
+    margin-top: 1.33em;
+    margin-bottom: 1.33em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+
+}
 
 
 body {
@@ -36,8 +45,6 @@ header {
     align-items: center;
 }
 
-
-
 .Container{
     font-family: 'Roboto', sans-serif;
     position: relative;
@@ -46,7 +53,7 @@ header {
 
 }
 
-main {
+.main {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -55,7 +62,7 @@ main {
     
 }
 
-main > div {
+.main > div {
     width: 600px;
     height: 256px;
     padding: 21px 20px 15px 16px;
@@ -84,7 +91,7 @@ input::placeholder {
     font-style: italic;
     font-size: 19px;
     color: #BABABA;
-  }
+}
 
 .irParaPerguntas {
     width: 368px;
@@ -123,7 +130,7 @@ input::placeholder {
 
 .criarQuizz{
     width: 1051px;
-    height: 181px;
+    min-height: 181px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -133,7 +140,7 @@ input::placeholder {
     border-radius: 5px;
     background-color: #FFFFFF;
 }
-aside{
+.box-quizz{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -142,14 +149,14 @@ aside{
     position: relative;
     
 }
-aside img {
+.box-quizz img {
     
     width: 340px;
     height: 181px;
     border-radius: 5px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%), url(image.png);
 }
-aside p {
+.box-quizz p {
     bottom: 0px;
     z-index: 1;
     position: absolute;
@@ -184,4 +191,6 @@ aside p {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%)
 
 }
+
+
 /*Fim estilos da tela 1 exibição de quizz*/
