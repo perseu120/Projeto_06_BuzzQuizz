@@ -12,10 +12,78 @@ let numeroPergunta = 0
 let ErroNivelQuizz
 let ErroPerguntasQuizz
 let novoQuizz = {title: "",
-                 imgage: "",
+                 image: "",
                  questions: [],
                  levels: []  }
-
+            
+let parateste = {
+	title: "Título do quizz",
+	image: "https://http.cat/411.jpg",
+	questions: [
+		{
+			title: "Título da pergunta 1",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 2",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 3",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		}
+	],
+	levels: [
+		{
+			title: "Título do nível 1",
+			image: "https://http.cat/411.jpg",
+			text: "Descrição do nível 1",
+			minValue: 0
+		},
+		{
+			title: "Título do nível 2",
+			image: "https://http.cat/412.jpg",
+			text: "Descrição do nível 2",
+			minValue: 50
+		}
+	]
+}
 let numeroNivel = 0
 let CondicaoNivel
 
@@ -40,7 +108,7 @@ let descricaoNivel
 
 
 
-criarQuizz ();
+infoBasicas ();
 function criarQuizz () {
    // infoBasicas();
     telaCriarExibirQuizz();
@@ -71,8 +139,8 @@ function processarInfoBasicas() {
 
     if (infoBasicasValidas()) {
 
-        novoQuizz = {title: "tituloQuizz",
-                 imgage: "urlQuizz",
+        novoQuizz = {title: tituloQuizz,
+                 image: urlQuizz,
                  questions: [],
                  levels: []   }
         criarPerguntasQuizz();
@@ -522,7 +590,7 @@ function finalizaQuizz(){
 
 
         tituloNivel = Nivel.querySelector(".tituloNivel").value;
-        porcenNivel = Nivel.querySelector(".porcenNivel").value;
+        porcenNivel = Number(Nivel.querySelector(".porcenNivel").value); 
         urlNivel = Nivel.querySelector(".urlNivel").value;
         descricaoNivel = Nivel.querySelector(".descricaoNivel").value;
         
@@ -550,6 +618,9 @@ function finalizaQuizz(){
         novoQuizz.levels = []
         alert("Algo errado, tente novamente");
     
+    }
+    else{
+        postarQuizz ();
     }
 }
 
@@ -588,4 +659,28 @@ function validarInputsNiveis () {
         CondicaoNivel = true
     }
 
+}
+
+function postarQuizz () {
+
+    console.log("entrou")
+    console.log(parateste)
+    console.log(novoQuizz)
+    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', novoQuizz);
+
+    requisicao.then(tratarSucesso);
+    requisicao.catch(tratarError);  
+
+}
+
+function tratarSucesso (boa) {
+
+    console.log("deu")
+    console.log(boa)
+}
+
+function tratarError (erro) {
+
+    console.log("n deu, que pena")
+    console.log(erro)
 }
