@@ -152,34 +152,57 @@ function todosQuizz(){
     <section class="Quizz">
         <h4>Todos os Quizzes</h4>
 
-        <div class="exibiQuizz">
+        <div class=".exibirQuizz">
 
-            ${cardQuizz()}
-            ${cardQuizz()}
-            ${cardQuizz()}
-                        
+             ${exibeTodosQuizzes()}
+            
         </div>
 
     </section>
     `
 }
 
-function cardQuizz(){
+function cardQuizz(objeto){
 
         return `
         <aside class="box-quizz">
-
-            <img src="http://disneyplusbrasil.com.br/wp-content/uploads/2022/01/Os-Simpsons-Disney-Plus.jpg">
-            <p>Acerte os personagens corretos </br>dos Simpsons e prove seu amor!</p>
+        
+            <img src="${objeto.image}">
+            <p>${objeto.title}</p>
             <div class="gradiente"></div>
-
+   
         </aside>
         `
 }
 
+
+
+let injetarQuizz = document.querySelector("section div");
+
+function exibeTodosQuizzes(){
+    
+
+    let promise = axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
+
+    let quizzes = [];
+
+    promise.then((response)=>{
+        quizzes = response.data;
+        injetarQuizz.innerHTML = "";
+        for(let i = 0; i< 6; i++){
+            injetarQuizz.innerHTML += cardQuizz(quizzes[i]);
+            
+        }
+
+    })
+    
+    
+
+}
+
 function criarPerguntasQuizz() {
 
-    let Main = document.querySelector("main");
+    
 
     Main.innerHTML = `            
     <h3 class="perguntasH3 margin132">Crie suas perguntas</h3>
@@ -219,8 +242,6 @@ function criarPerguntasQuizz() {
 }
 
 function criarPerguntasFechadas () {
-
-    let Main = document.querySelector("main");
 
     
     for (let i = 2; i <= quantidadePerguntas; i++){
