@@ -4,6 +4,10 @@ let urlQuizz = "";
 let quantidadePerguntas = 0;
 let quantidadeNiveis = 2;
 let res
+
+const Main = document.querySelector(".main");
+
+
 let numeroPergunta = 0
 let ErroNivelQuizz
 let ErroPerguntasQuizz
@@ -35,17 +39,18 @@ let urlNivel
 let descricaoNivel
 
 
-criarNiveisQuizz()
+
+criarQuizz ();
 function criarQuizz () {
-    infoBasicas();
+   // infoBasicas();
+    telaCriarExibirQuizz();
+ 
 }
 
 function infoBasicas () {
 
-    let Main = document.querySelector("main");
-
     Main.innerHTML = `
-    <h3>Comece pelo começo</h3>
+    <h3 class= "margin140">Comece pelo começo</h3>
     <div class="PerguntasBasicas">
         <input class="Title" type="text" placeholder="Título do seu quizz">
         <input class="URL" type="text" placeholder="URL da imagem do seu quizz">
@@ -113,13 +118,71 @@ let isImgLink = (urlQuizz) => {
     return (urlQuizz.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) !== null);
   }
 
+function telaCriarExibirQuizz(){
 
-  function criarPerguntasQuizz() {
+    Main.innerHTML = `<div class="containerQuizz">
+                
+        ${quizzUsuario()}
+
+        ${todosQuizz()}
+                
+
+    </div>`
+
+}
+
+function quizzUsuario(){
+
+    return `
+        <div class="criarQuizz">
+
+            <div>
+                <p class="prgCriarQuiz">você não criou nenhum quizz ainda :(</p>
+
+                <button class="btnCriarQuiz" onclick="infoBasicas()">Criar Quizz</button>
+            </div>
+                    
+        </div> `
+    
+}
+
+function todosQuizz(){
+
+    return  `
+    <section class="Quizz">
+        <h4>Todos os Quizzes</h4>
+
+        <div class="exibiQuizz">
+
+            ${cardQuizz()}
+            ${cardQuizz()}
+            ${cardQuizz()}
+                        
+        </div>
+
+    </section>
+    `
+}
+
+function cardQuizz(){
+
+        return `
+        <aside class="box-quizz">
+
+            <img src="http://disneyplusbrasil.com.br/wp-content/uploads/2022/01/Os-Simpsons-Disney-Plus.jpg">
+            <p>Acerte os personagens corretos </br>dos Simpsons e prove seu amor!</p>
+            <div class="gradiente"></div>
+
+        </aside>
+        `
+}
+
+function criarPerguntasQuizz() {
 
     let Main = document.querySelector("main");
 
     Main.innerHTML = `            
-    <h3 class="perguntasH3">Crie suas perguntas</h3>
+    <h3 class="perguntasH3 margin132">Crie suas perguntas</h3>
     <div class="Pergunta1 PerguntasAberto">
         <div>
             <h3>Pergunta 1</h3>
@@ -171,7 +234,6 @@ function criarPerguntasFechadas () {
 
     Main.innerHTML += `<button class="irParaPerguntas" onclick="processarPerguntasQuizz()">Prosseguir pra criar níveis</button>`
 } 
-
 
 function abrirCardPergunta (Selecionado) {
 
@@ -385,7 +447,7 @@ function criarNiveisQuizz() {
     let Main = document.querySelector("main");
     
     Main.innerHTML = `
-    <h3 class="perguntasH3">Agora, decida os níveis</h3>        
+    <h3 class="perguntasH3 margin132">Agora, decida os níveis</h3>        
     <div class="Nivel1 NiveisAberto">
         <h3>Nível 1</h3>
         <input class="tituloNivel" type="text" placeholder="Título do nível">
