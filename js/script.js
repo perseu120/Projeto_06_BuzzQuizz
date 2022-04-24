@@ -110,7 +110,7 @@ criarQuizz();
 function criarQuizz () {
    // infoBasicas();
     telaCriarExibirQuizz();
-    // criarTelaResponderQuizz();
+    // criarTelaResponderQuizz(); 
 }
 
 function infoBasicas () {
@@ -186,6 +186,8 @@ let isImgLink = (urlQuizz) => {
 
 function telaCriarExibirQuizz(){
 
+    console.log("telaCriarExibirQuizz")
+
     Main.innerHTML = `<div class="containerQuizz">
                 
         ${quizzUsuario()}
@@ -194,12 +196,33 @@ function telaCriarExibirQuizz(){
                 
 
     </div>`
-
+    console.log(quizzUsuario())
 }
 
 function quizzUsuario(){
 
-    return `
+    console.log("quizzUsuario")
+    if (!localStorage.getItem("meusQuizzes")) {
+
+        return`
+        <section class="Quizz bottom48 margin140">
+            <div class="Flex none">
+            <h4>Seus Quizzes</h4>
+            <ion-icon class="red" name="add-circle"></ion-icon>
+            </div>
+    
+            <div class=".exibirQuizz">
+    
+            ${meusQuizzes()}
+                
+            </div>
+    
+        </section>
+        `
+
+    }
+    else{
+        return`
         <div class="criarQuizz">
 
             <div>
@@ -209,10 +232,14 @@ function quizzUsuario(){
             </div>
                     
         </div> `
-    
+    }
+
+
 }
 
 function todosQuizz(){
+
+    console.log("todosQuizz")
 
     return  `
     <section class="Quizz">
@@ -228,7 +255,11 @@ function todosQuizz(){
     `
 }
 
+
+
 function cardQuizz(objeto){
+
+    console.log("cardQuizz(objeto)")
 
         return `
         <aside id="${objeto.id}" class="box-quizz" onClick ="criarTelaResponderQuizz(this.id)">
@@ -246,7 +277,7 @@ let injetarQuizz = document.querySelector("section div");
 
 function exibeTodosQuizzes(){
     
-
+    console.log("exibeTodosQuizzes()")
     let promise = axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
 
     let quizzes = [];
@@ -268,6 +299,35 @@ function exibeTodosQuizzes(){
     
 
 }
+
+function meusQuizzes() {
+
+
+
+    const meusquizzesSerializados = localStorage.getItem("meusQuizzes"); 
+
+    console.log(meusquizzesSerializados)
+
+    const meusquizzes = JSON.parse(meusquizzesSerializados); 
+
+    const processa = (meusquizzes) => {
+
+        console.log("arrow()")
+
+        injetarQuizz.innerHTML = "";
+        for(let i = 0; i< meusquizzes.length; i++){
+            injetarQuizz.innerHTML += cardQuizz(quizzes[i]);
+            
+        }
+
+    }
+
+
+}
+
+
+
+
 
 function criarPerguntasQuizz() {
 
@@ -776,21 +836,87 @@ function postarQuizz () {
     console.log("entrou")
     console.log(parateste)
     console.log(novoQuizz)
-    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', novoQuizz);
+    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', parateste);
 
     requisicao.then(tratarSucesso);
     requisicao.catch(tratarError);  
 
 }
 
-function tratarSucesso (boa) {
+function tratarSucesso (meuquizz) {
 
     console.log("deu")
-    console.log(boa)
+    let meusQuizzes
+
+    if (!(localStorage.getItem("meusQuizzes"))) {
+
+        meusQuizzes = [meuquizz.data];
+
+    }
+    else{
+        let quizzesSerializados = localStorage.getItem("meusQuizzes");
+        
+        meusQuizzes = JSON.parse(quizzesSerializados);
+
+        meusQuizzes.push(meuquizz.data)
+
+        
+        console.log(meusQuizzes)
+    }
+    
+
+    meusQuizzes = JSON.stringify(meusQuizzes);
+
+    localStorage.setItem("meusQuizzes", meusQuizzes); // Armazenando a string na chave "lista" do Local Storage
+
+    seuQuizzPronto ()
 }
 
 function tratarError (erro) {
 
     console.log("n deu, que pena")
     console.log(erro)
+}
+
+function seuQuizzPronto (){
+
+    const meusquizzesSerializados = localStorage.getItem("meusQuizzes"); // Pegando de volta a string armazenada na chave "lista"
+
+    console.log(meusquizzesSerializados)
+
+    const meusquizzes = JSON.parse(meusquizzesSerializados); // Transformando a string de volta na array original
+
+    console.log(meusquizzes)
+
+
+    let Main = document.querySelector("main");
+    
+    Main.innerHTML = `
+    <h3 class="perguntasH3 margin140">Seu quizz está pronto!</h3>        
+    
+    <section class="Quizz">
+
+        <div class="exibirQuizz Flex">
+
+             ${cardQuizzUnico(meusquizzes[meusquizzes.length-1])}
+            
+        </div>
+
+    </section>
+    <button class="ButtomSeuquizzPronto" onClick ="criarTelaResponderQuizz(this.id)">Acessar Quizz</button>
+    <button class="ButtomSeuquizzProntoBranco" onClick ="telaCriarExibirQuizz()">Voltar pra home</button>
+    `
+}
+
+function cardQuizzUnico(objeto){
+
+    return `
+    <div id="${objeto.id}" class="box-quizzUnico" onClick ="">
+    
+        <img  class="SeuquizzPronto" src="${objeto.image}">
+        <p>${objeto.title}</p>
+        <div class="gradiente"></div>
+
+    </div>
+    `
 }
