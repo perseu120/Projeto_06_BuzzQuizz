@@ -299,10 +299,11 @@ button.irParaPerguntas {
 .sessaoPerguntaResposta{
     
     width: 759px;
-    height: 676px;
+    
     background: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     padding-top: 30px;
+    padding-bottom: 20px;
     margin-bottom: 40px;
 
 }
@@ -339,7 +340,11 @@ button.irParaPerguntas {
     width: 329px;
     height: 175px;
     border-radius: 0px;
+}
 
+.alternativasPergutnas > p{
+    overflow: hidden;
+    width: 200px;
 }
 
 /*Fim estilos da tela 1 exibição de quizz*/
