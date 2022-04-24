@@ -33,7 +33,7 @@ h4 {
 }
 
 body {
-    background: #E5E5E5;
+    background: #FAFAFA;
 
 }
 
@@ -231,6 +231,7 @@ button.irParaPerguntas {
     width: 340px;
     
 }
+
 .box-quizz img {
     
     width: 340px;
@@ -239,6 +240,7 @@ button.irParaPerguntas {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
     object-fit: cover;
 }
+
 .box-quizz p {
     bottom: 0px;
     z-index: 2;
@@ -256,6 +258,40 @@ button.irParaPerguntas {
     word-break: normal;
     overflow: hidden;
 }
+
+.box-quizzUnico{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 5px;
+    position: relative;
+    
+}
+
+.box-quizzUnico p {
+   
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 23px;
+    
+    bottom: 0px;
+    left: 23px;
+    z-index: 2;
+    position: absolute;
+
+    width: 301px;
+    height: 54px;
+
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    word-break: normal;
+    overflow: hidden;
+}
+
 
 .gradiente{
     position: absolute;
@@ -343,3 +379,59 @@ button.irParaPerguntas {
 }
 
 /*Fim estilos da tela 1 exibição de quizz*/
+
+.Flex {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+}
+
+.none {
+    justify-content: none;
+}
+
+.red{
+    color: #EC362D;
+    font-size: 31px;
+}
+
+.SeuquizzPronto {
+
+    width: 500px;
+    height: 266px;
+
+}
+
+.bottom48 {
+    margin-bottom: 48px;
+}
+
+.ButtomSeuquizzPronto {
+    width: 220px;
+    height: 44px;
+    background-color: #EC362D;
+    margin-top: 45px;
+    margin-bottom: 9px;
+    border-radius: 15px;
+    font-size: 21px;
+    color: #FFF5F4;
+    border-color: #EC362D;
+    border-style: solid;
+    box-shadow: none;
+}
+
+.ButtomSeuquizzProntoBranco {
+    width: 220px;
+    height: 44px;
+    background: #FAFAFA;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    font-size: 21px;
+    color: #818181;
+    border-color: #FAFAFA;
+    border-style: solid;
+    box-shadow: none;
+}
