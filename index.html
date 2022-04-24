@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <!-- tegs referente a importação e configuração do html -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
 
 
     <title>BuzzQuizz</title>
@@ -35,10 +38,99 @@
             </div>
 
             <button class="irParaPerguntas" onclick="processarInfoBasicas()">Prosseguir pra criar perguntas</button> -->
-                  
+
+            <div class="containerAlternativas">
+    
+                <aside class="alternativasPergutnas">
+    
+                    <img src="${objeto.questions[0].answers[0].image}"
+                        alt="">
+    
+                    <p>Opção A</p>
+    
+                </aside>
+    
+                <aside class="alternativasPergutnas">
+    
+                    <img src="${objeto.questions[0].answers[1].image}"
+                        alt="">
+    
+                    <p>Opção A</p>
+    
+                </aside>
+    
+                <aside class="alternativasPergutnas">
+    
+                    <img src="${objeto.questions[0].answers[2].image}"
+                        alt="">
+    
+                    <p>Opção A</p>
+    
+                </aside>
+    
+                <aside class="alternativasPergutnas">
+    
+                    <img src="${objeto.questions[0].answers[3].image}"
+                        alt="">
+    
+                    <p>Opção A</p>
+    
+                </aside>
+
+<!--             
+            <div class="containerPergunta">
+                <section class="sessaoPerguntaResposta">
+
+                    <div class="perguntaQuizz">
+                        <p>aqui vai ter sua pergunta?</p>
+                    </div>
+
+                    <div class="containerAlternativas">
+
+                        <aside class="alternativasPergutnas">
+
+                            <img src="https://www.tribunadeituverava.com.br/wp-content/uploads/2021/03/1338024-0-q80.jpg"
+                                alt="">
+
+                            <p>Opção A</p>
+
+                        </aside>
+
+                        <aside class="alternativasPergutnas">
+
+                            <img src="https://www.tribunadeituverava.com.br/wp-content/uploads/2021/03/1338024-0-q80.jpg"
+                                alt="">
+
+                            <p>Opção A</p>
+
+                        </aside>
+
+                        <aside class="alternativasPergutnas">
+
+                            <img src="https://www.tribunadeituverava.com.br/wp-content/uploads/2021/03/1338024-0-q80.jpg"
+                                alt="">
+
+                            <p>Opção A</p>
+
+                        </aside>
+
+                        <aside class="alternativasPergutnas">
+
+                            <img src="https://www.tribunadeituverava.com.br/wp-content/uploads/2021/03/1338024-0-q80.jpg"
+                                alt="">
+
+                            <p>Opção A</p>
+
+                        </aside>
+
+                    </div>
+
+                </section>
+            </div> -->
+
         </main>
     </div>
-    
+
 
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

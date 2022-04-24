@@ -7,15 +7,82 @@ let res
 
 const Main = document.querySelector(".main");
 
-
 let numeroPergunta = 0
 let ErroNivelQuizz
 let ErroPerguntasQuizz
 let novoQuizz = {title: "",
-                 imgage: "",
+                 image: "",
                  questions: [],
                  levels: []  }
-
+            
+let parateste = {
+	title: "Título do quizz",
+	image: "https://http.cat/411.jpg",
+	questions: [
+		{
+			title: "Título da pergunta 1",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 2",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 3",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		}
+	],
+	levels: [
+		{
+			title: "Título do nível 1",
+			image: "https://http.cat/411.jpg",
+			text: "Descrição do nível 1",
+			minValue: 0
+		},
+		{
+			title: "Título do nível 2",
+			image: "https://http.cat/412.jpg",
+			text: "Descrição do nível 2",
+			minValue: 50
+		}
+	]
+}
 let numeroNivel = 0
 let CondicaoNivel
 
@@ -39,12 +106,11 @@ let urlNivel
 let descricaoNivel
 
 
-
-criarQuizz ();
+criarQuizz();
 function criarQuizz () {
    // infoBasicas();
     telaCriarExibirQuizz();
- 
+    // criarTelaResponderQuizz();
 }
 
 function infoBasicas () {
@@ -71,8 +137,8 @@ function processarInfoBasicas() {
 
     if (infoBasicasValidas()) {
 
-        novoQuizz = {title: "tituloQuizz",
-                 imgage: "urlQuizz",
+        novoQuizz = {title: tituloQuizz,
+                 image: urlQuizz,
                  questions: [],
                  levels: []   }
         criarPerguntasQuizz();
@@ -165,7 +231,7 @@ function todosQuizz(){
 function cardQuizz(objeto){
 
         return `
-        <aside class="box-quizz">
+        <aside id="${objeto.id}" class="box-quizz" onClick ="criarTelaResponderQuizz(this.id)">
         
             <img src="${objeto.image}">
             <p>${objeto.title}</p>
@@ -174,7 +240,6 @@ function cardQuizz(objeto){
         </aside>
         `
 }
-
 
 
 let injetarQuizz = document.querySelector("section div");
@@ -189,11 +254,15 @@ function exibeTodosQuizzes(){
     promise.then((response)=>{
         quizzes = response.data;
         injetarQuizz.innerHTML = "";
-        for(let i = 0; i< 6; i++){
+        for(let i = 0; i< quizzes.length; i++){
             injetarQuizz.innerHTML += cardQuizz(quizzes[i]);
             
         }
 
+    })
+
+    promise.catch((err)=>{
+        console.log(err);
     })
     
     
@@ -254,7 +323,95 @@ function criarPerguntasFechadas () {
     }
 
     Main.innerHTML += `<button class="irParaPerguntas" onclick="processarPerguntasQuizz()">Prosseguir pra criar níveis</button>`
-} 
+}
+// inicio das funções de exibição da tela dois dentro de um quizz
+
+function criarTelaResponderQuizz(id){
+ 
+    bannerQuizz(id);
+    pergutnaQuizz(id);
+
+}
+
+function bannerQuizz(id){
+
+    let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`)
+    let urlImg;
+
+    promise.then((response)=>{
+        const objeto = response.data;
+        urlImg = objeto.image;
+        
+        const banner = `
+        <div class="bannerQuizz">
+    
+            <div class="imgBanner">
+                <img class="imgBanner"
+                    src="${urlImg}" alt="">
+            </div>
+    
+        </div>
+        `
+        Main.innerHTML = banner;
+    })
+    promise.catch((err)=>{
+        console.log(err);
+    })
+
+}
+
+function pergutnaQuizz(id){
+
+    let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`);
+
+    console.log("entoru aqui")
+    promise.then((response)=>{
+        const objeto = response.data;
+        console.log(objeto);
+
+        for(let i = 0; i < objeto.questions.length; i++){
+            const containPergunta = `
+            <div class="containerPergunta">
+                <section class="sessaoPerguntaResposta">
+            
+                    <div class="perguntaQuizz">
+                        <p>${objeto.questions[i].title}</p>
+                    </div>
+                    <div class="containerAlternativas">
+                        ${alternativaQuizz(objeto.questions[i])}
+                    </div>
+                    
+                </section>
+            </div>
+            `
+            Main.innerHTML += containPergunta;
+        }
+        
+    })
+
+}
+function alternativaQuizz(array){
+
+    const sessaopergunta = document.querySelector(".sessaoPerguntaResposta")
+    const resposta = array.answers;
+    let alternativa = "";
+
+    for(let i = 0; i < resposta.length; i++){
+        alternativa += `
+        <aside class="alternativasPergutnas">
+    
+            <img src="${resposta[i].image}"
+                alt="">
+    
+            <p>${resposta[i].text}</p>
+    
+        </aside>
+        `
+    }
+    return alternativa;
+}
+
+// fim das funções de exibição da tela dois dentro de um quizz
 
 function abrirCardPergunta (Selecionado) {
 
@@ -543,7 +700,7 @@ function finalizaQuizz(){
 
 
         tituloNivel = Nivel.querySelector(".tituloNivel").value;
-        porcenNivel = Nivel.querySelector(".porcenNivel").value;
+        porcenNivel = Number(Nivel.querySelector(".porcenNivel").value); 
         urlNivel = Nivel.querySelector(".urlNivel").value;
         descricaoNivel = Nivel.querySelector(".descricaoNivel").value;
         
@@ -571,6 +728,9 @@ function finalizaQuizz(){
         novoQuizz.levels = []
         alert("Algo errado, tente novamente");
     
+    }
+    else{
+        postarQuizz ();
     }
 }
 
@@ -609,4 +769,28 @@ function validarInputsNiveis () {
         CondicaoNivel = true
     }
 
+}
+
+function postarQuizz () {
+
+    console.log("entrou")
+    console.log(parateste)
+    console.log(novoQuizz)
+    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', novoQuizz);
+
+    requisicao.then(tratarSucesso);
+    requisicao.catch(tratarError);  
+
+}
+
+function tratarSucesso (boa) {
+
+    console.log("deu")
+    console.log(boa)
+}
+
+function tratarError (erro) {
+
+    console.log("n deu, que pena")
+    console.log(erro)
 }
