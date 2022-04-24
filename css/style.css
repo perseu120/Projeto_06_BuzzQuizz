@@ -17,9 +17,9 @@ h3 {
     margin-bottom: 27px;
 }
 h4 {
-    font-size: 1em;
-    margin-top: 1.33em;
-    margin-bottom: 1.33em;
+    font-size: 20px;
+    margin-top: 48px;
+    margin-bottom: 12px;
     margin-left: 0;
     margin-right: 0;
     font-weight: bold;
@@ -308,6 +308,12 @@ button.irParaPerguntas {
     width: 1051px;
 }
 
+.meusquizz {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1051px;
+}
+
 /*Fim estilos da tela 1 exibição de quizz*/
 
 /*inicio estilos da tela 2 pagina do quizz quizz*/
@@ -394,8 +400,13 @@ button.irParaPerguntas {
 
 }
 
-.none {
-    justify-content: none;
+.seusmaisquizzes {
+    display: flex;
+    align-items: center;
+}
+
+.seusmaisquizzes h4 {
+    margin: 0 17px 0 0;
 }
 
 .red{

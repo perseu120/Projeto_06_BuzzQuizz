@@ -106,6 +106,10 @@ let urlNivel
 let descricaoNivel
 
 
+
+
+
+
 criarQuizz();
 function criarQuizz () {
    // infoBasicas();
@@ -197,43 +201,47 @@ function telaCriarExibirQuizz(){
 
     </div>`
     console.log(quizzUsuario())
+    meusQuizzes();
 }
 
 function quizzUsuario(){
 
-    console.log("quizzUsuario")
-    if (!localStorage.getItem("meusQuizzes")) {
+    
+    if (localStorage.getItem("meusQuizzes")) {
 
         return`
-        <section class="Quizz bottom48 margin140">
-            <div class="Flex none">
+        <section class="bottom48 margin140">
+            <div class="seusmaisquizzes ">
             <h4>Seus Quizzes</h4>
-            <ion-icon class="red" name="add-circle"></ion-icon>
+            <ion-icon class="red" onclick="infoBasicas()" name="add-circle"></ion-icon>
             </div>
     
-            <div class=".exibirQuizz">
+            <div class="meusquizz">
     
-            ${meusQuizzes()}
+           
                 
             </div>
     
         </section>
         `
-
+       
     }
     else{
         return`
-        <div class="criarQuizz">
-
-            <div>
-                <p class="prgCriarQuiz">você não criou nenhum quizz ainda :(</p>
-
-                <button class="btnCriarQuiz" onclick="infoBasicas()">Criar Quizz</button>
-            </div>
-                    
-        </div> `
+    
+         
+             <div class="criarQuizz">
+    
+                 <div>
+                    <p class="prgCriarQuiz">você não criou nenhum quizz ainda :(</p>
+    
+                     <button class="btnCriarQuiz" onclick="infoBasicas()">Criar Quizz</button>
+                 </div>
+                        
+             </div> `
     }
 
+    
 
 }
 
@@ -245,7 +253,7 @@ function todosQuizz(){
     <section class="Quizz">
         <h4>Todos os Quizzes</h4>
 
-        <div class=".exibirQuizz">
+        <div class="exibirQuizz">
 
              ${exibeTodosQuizzes()}
             
@@ -273,7 +281,9 @@ function cardQuizz(objeto){
 }
 
 
-let injetarQuizz = document.querySelector("section div");
+let injetarQuizz = document.querySelector(".exibirQuizz");
+
+console.log(injetarQuizz)
 
 function exibeTodosQuizzes(){
     
@@ -308,25 +318,33 @@ function meusQuizzes() {
 
     console.log(meusquizzesSerializados)
 
-    const meusquizzes = JSON.parse(meusquizzesSerializados); 
+     const meusquizzes = JSON.parse(meusquizzesSerializados); 
 
-    const processa = (meusquizzes) => {
+     processa (meusquizzes);
 
-        console.log("arrow()")
+      
 
-        injetarQuizz.innerHTML = "";
-        for(let i = 0; i< meusquizzes.length; i++){
-            injetarQuizz.innerHTML += cardQuizz(quizzes[i]);
-            
-        }
-
-    }
-
+      
 
 }
 
 
+function processa(meusquizzes) {
 
+    let aqui = document.querySelector(".meusquizz")
+
+    console.log("arrow()")
+    
+    console.log(aqui)
+    
+    console.log("arrr")
+    aqui.innerHTML = "";
+    for(let i = 0; i< meusquizzes.length; i++){
+        aqui.innerHTML += cardQuizz(meusquizzes[i]);
+        
+      }
+
+  }
 
 
 function criarPerguntasQuizz() {
