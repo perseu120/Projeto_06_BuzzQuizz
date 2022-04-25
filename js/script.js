@@ -202,7 +202,7 @@ function telaCriarExibirQuizz(){
 function quizzUsuario(){
 
     console.log("quizzUsuario")
-    if (!localStorage.getItem("meusQuizzes")) {
+    if (false) {
 
         return`
         <section class="Quizz bottom48 margin140">
@@ -245,7 +245,7 @@ function todosQuizz(){
     <section class="Quizz">
         <h4>Todos os Quizzes</h4>
 
-        <div class=".exibirQuizz">
+        <div class="exibirQuizz">
 
              ${exibeTodosQuizzes()}
             
@@ -272,11 +272,10 @@ function cardQuizz(objeto){
         `
 }
 
-
-let injetarQuizz = document.querySelector("section div");
-
+let injetarQuizz = document.querySelector(".exibirQuizz");
 function exibeTodosQuizzes(){
     
+
     console.log("exibeTodosQuizzes()")
     let promise = axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
 
@@ -408,6 +407,10 @@ function bannerQuizz(id){
             <div class="imgBanner">
                 <img class="imgBanner"
                     src="${urlImg}" alt="">
+                
+            </div>
+            <div class="opacidade">
+                <p class="tituloQuiz">${objeto.title}</p>
             </div>
     
         </div>
@@ -424,7 +427,6 @@ function pergutnaQuizz(id){
 
     let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`);
 
-    console.log("entoru aqui")
     promise.then((response)=>{
         const objeto = response.data;
         console.log(objeto);
@@ -451,9 +453,11 @@ function pergutnaQuizz(id){
 
 }
 function alternativaQuizz(array){
-
+    //tem que embaralhar o array antes de colocar eles nas perguntas
     const sessaopergunta = document.querySelector(".sessaoPerguntaResposta")
-    const resposta = array.answers;
+    let resposta = array.answers;
+    resposta.sort(comparador);
+
     let alternativa = "";
 
     for(let i = 0; i < resposta.length; i++){
@@ -919,4 +923,8 @@ function cardQuizzUnico(objeto){
 
     </div>
     `
+}
+
+function comparador() { 
+	return Math.random() - 0.5; 
 }
