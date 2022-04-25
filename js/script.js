@@ -106,6 +106,10 @@ let urlNivel
 let descricaoNivel
 
 
+
+
+
+
 criarQuizz();
 function criarQuizz () {
    // infoBasicas();
@@ -197,43 +201,47 @@ function telaCriarExibirQuizz(){
 
     </div>`
     console.log(quizzUsuario())
+    meusQuizzes();
 }
 
 function quizzUsuario(){
 
-    console.log("quizzUsuario")
-    if (false) {
+    
+    if (localStorage.getItem("meusQuizzes")) {
 
         return`
-        <section class="Quizz bottom48 margin140">
-            <div class="Flex none">
+        <section class="bottom48 margin140">
+            <div class="seusmaisquizzes ">
             <h4>Seus Quizzes</h4>
-            <ion-icon class="red" name="add-circle"></ion-icon>
+            <ion-icon class="red" onclick="infoBasicas()" name="add-circle"></ion-icon>
             </div>
     
-            <div class=".exibirQuizz">
+            <div class="meusquizz">
     
-            ${meusQuizzes()}
+           
                 
             </div>
     
         </section>
         `
-
+       
     }
     else{
         return`
-        <div class="criarQuizz">
-
-            <div>
-                <p class="prgCriarQuiz">você não criou nenhum quizz ainda :(</p>
-
-                <button class="btnCriarQuiz" onclick="infoBasicas()">Criar Quizz</button>
-            </div>
-                    
-        </div> `
+    
+         
+             <div class="criarQuizz">
+    
+                 <div>
+                    <p class="prgCriarQuiz">você não criou nenhum quizz ainda :(</p>
+    
+                     <button class="btnCriarQuiz" onclick="infoBasicas()">Criar Quizz</button>
+                 </div>
+                        
+             </div> `
     }
 
+    
 
 }
 
@@ -273,6 +281,7 @@ function cardQuizz(objeto){
 }
 
 let injetarQuizz = document.querySelector(".exibirQuizz");
+
 function exibeTodosQuizzes(){
     
 
@@ -307,25 +316,33 @@ function meusQuizzes() {
 
     console.log(meusquizzesSerializados)
 
-    const meusquizzes = JSON.parse(meusquizzesSerializados); 
+     const meusquizzes = JSON.parse(meusquizzesSerializados); 
 
-    const processa = (meusquizzes) => {
+     processa (meusquizzes);
 
-        console.log("arrow()")
+      
 
-        injetarQuizz.innerHTML = "";
-        for(let i = 0; i< meusquizzes.length; i++){
-            injetarQuizz.innerHTML += cardQuizz(quizzes[i]);
-            
-        }
-
-    }
-
+      
 
 }
 
 
+function processa(meusquizzes) {
 
+    let aqui = document.querySelector(".meusquizz")
+
+    console.log("arrow()")
+    
+    console.log(aqui)
+    
+    console.log("arrr")
+    aqui.innerHTML = "";
+    for(let i = 0; i< meusquizzes.length; i++){
+        aqui.innerHTML += cardQuizz(meusquizzes[i]);
+        
+      }
+
+  }
 
 
 function criarPerguntasQuizz() {
@@ -840,7 +857,7 @@ function postarQuizz () {
     console.log("entrou")
     console.log(parateste)
     console.log(novoQuizz)
-    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', parateste);
+    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', novoQuizz);
 
     requisicao.then(tratarSucesso);
     requisicao.catch(tratarError);  
@@ -892,6 +909,9 @@ function seuQuizzPronto (){
 
     console.log(meusquizzes)
 
+    let id = meusquizzes[meusquizzes.length-1]
+
+    id = Number(id.id) 
 
     let Main = document.querySelector("main");
     
@@ -907,7 +927,7 @@ function seuQuizzPronto (){
         </div>
 
     </section>
-    <button class="ButtomSeuquizzPronto" onClick ="criarTelaResponderQuizz(this.id)">Acessar Quizz</button>
+    <button class="ButtomSeuquizzPronto" onClick ="criarTelaResponderQuizz(${id})">Acessar Quizz</button>
     <button class="ButtomSeuquizzProntoBranco" onClick ="telaCriarExibirQuizz()">Voltar pra home</button>
     `
 }
