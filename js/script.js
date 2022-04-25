@@ -110,7 +110,7 @@ let descricaoNivel
 
 
 
-criarQuizz();
+criarQuizz ();
 function criarQuizz () {
    // infoBasicas();
     telaCriarExibirQuizz();
@@ -939,7 +939,7 @@ function cardQuizzUnico(objeto){
     
         <img  class="SeuquizzPronto" src="${objeto.image}">
         <p>${objeto.title}</p>
-        <div class="gradiente"></div>
+        <div class="gradienteFinal"></div>
 
     </div>
     `
