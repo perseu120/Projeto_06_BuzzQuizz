@@ -854,7 +854,7 @@ function postarQuizz () {
     console.log("entrou")
     console.log(parateste)
     console.log(novoQuizz)
-    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', parateste);
+    const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', novoQuizz);
 
     requisicao.then(tratarSucesso);
     requisicao.catch(tratarError);  
@@ -906,6 +906,9 @@ function seuQuizzPronto (){
 
     console.log(meusquizzes)
 
+    let id = meusquizzes[meusquizzes.length-1]
+
+    id = Number(id.id) 
 
     let Main = document.querySelector("main");
     
@@ -921,7 +924,7 @@ function seuQuizzPronto (){
         </div>
 
     </section>
-    <button class="ButtomSeuquizzPronto" onClick ="criarTelaResponderQuizz(this.id)">Acessar Quizz</button>
+    <button class="ButtomSeuquizzPronto" onClick ="criarTelaResponderQuizz(${id})">Acessar Quizz</button>
     <button class="ButtomSeuquizzProntoBranco" onClick ="telaCriarExibirQuizz()">Voltar pra home</button>
     `
 }
