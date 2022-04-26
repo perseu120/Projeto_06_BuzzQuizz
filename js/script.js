@@ -6,7 +6,7 @@ let quantidadeNiveis = 2;
 let res
 
 const Main = document.querySelector(".main");
-
+let objetoQuizUso;
 let numeroPergunta = 0
 let ErroNivelQuizz
 let ErroPerguntasQuizz
@@ -85,6 +85,7 @@ let parateste = {
 }
 let numeroNivel = 0
 let CondicaoNivel
+let contador = 0;
 
 
 // Inputs CriandoQuizz - Perguntas
@@ -189,8 +190,6 @@ let isImgLink = (urlQuizz) => {
   }
 
 function telaCriarExibirQuizz(){
-
-    console.log("telaCriarExibirQuizz")
 
     Main.innerHTML = `<div class="containerQuizz">
                 
@@ -445,19 +444,18 @@ function pergutnaQuizz(id){
     let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`);
 
     promise.then((response)=>{
-        const objeto = response.data;
-        console.log(objeto);
+        objetoQuizUso = response.data;
 
-        for(let i = 0; i < objeto.questions.length; i++){
+        for(let i = 0; i < objetoQuizUso.questions.length; i++){
             const containPergunta = `
             <div class="containerPergunta">
                 <section class="sessaoPerguntaResposta">
             
                     <div class="perguntaQuizz">
-                        <p>${objeto.questions[i].title}</p>
+                        <p>${objetoQuizUso.questions[i].title}</p>
                     </div>
                     <div class="containerAlternativas">
-                        ${alternativaQuizz(objeto.questions[i])}
+                        ${alternativaQuizz(objetoQuizUso.questions[i])}
                     </div>
                     
                 </section>
@@ -470,7 +468,7 @@ function pergutnaQuizz(id){
 
 }
 function alternativaQuizz(array){
-    //tem que embaralhar o array antes de colocar eles nas perguntas
+
     const sessaopergunta = document.querySelector(".sessaoPerguntaResposta")
     let resposta = array.answers;
     resposta.sort(comparador);
@@ -479,17 +477,139 @@ function alternativaQuizz(array){
 
     for(let i = 0; i < resposta.length; i++){
         alternativa += `
-        <aside class="alternativasPergutnas">
+        <aside id="${resposta[i].isCorrectAnswer}" class="alternativasPergutnas"  onclick="selecionarResposta(this)">
     
-            <img src="${resposta[i].image}"
-                alt="">
-    
+            <div class="alternativasPergutnasDivImg" >
+                <img class="alternativasPergutnasImg" src="${resposta[i].image}"
+                   alt="">
+                <div class="fundoBranco Invisivel ">
+                                
+                </div>
+
+            </div>
+
             <p>${resposta[i].text}</p>
+
+
     
         </aside>
         `
     }
     return alternativa;
+}
+
+function selecionarResposta(resClicada){
+    
+    contador ++;
+
+    let todasResposta = resClicada.parentNode.querySelectorAll("aside");
+
+    for(let i =0; i< todasResposta.length; i++){
+        
+        if(resClicada !== todasResposta[i]){
+            todasResposta[i].querySelector(".fundoBranco").classList.remove("Invisivel");
+            todasResposta[i].classList.add("naoClicavel");
+            
+        }
+
+        if(todasResposta[i].id === "true"){
+            
+            todasResposta[i].querySelector("p").style.color= "green";
+        }
+        if(todasResposta[i].id === "false"){
+        
+            todasResposta[i].querySelector("p").style.color= "red";
+        }
+    }
+
+    setTimeout(() => {
+
+        window.scrollBy(0, 700);
+
+    }, 2000);
+
+    if(contador === objetoQuizUso.questions.length){
+        setTimeout(() => {
+            resultadoJogo();
+            window.scrollBy(0, 700);
+    
+        }, 2000);
+        
+    }
+
+    // function answerSelection(answerSelected, isCorrectAnswer) {
+    //     let documentSection = answerSelected.parentNode;
+    //     documentSection = documentSection.parentNode;
+      
+    //     // se não foi escolhida nenhuma resposta do cartão
+    //     if (!isSelected(documentSection)) {
+    //       // não finalizou ainda
+    //       if (questionList.length <= qtdQuestions) {
+    //         const article = documentSection.parentNode;
+      
+    //         setTimeout(() => {
+    //           let count = 0;
+    //           const interval = setInterval(() => {
+    //             if(article.clientHeight + 26 < count) clearInterval(interval);
+    //             count += 14;
+    //             window.scrollBy(0, 14);
+    //           }, 6);
+    //         }, 2000);
+      
+    //         questionList.push({ question: documentSection, isCorrectAnswer: isCorrectAnswer });
+      
+    //         const coverSelection = answerSelected.querySelector('.white-cover');
+      
+    //         const documentArticle = documentSection.parentNode;
+    //         const coverList = documentArticle.querySelectorAll('.white-cover');
+    //         const answerList = documentSection.querySelectorAll('.answer-quiz'); // mudar para documenteArticle
+      
+    //         // altera cor do text da resposta erradas e certas
+    //         for (let i = 0; i < answerList.length; i++) {
+    //           if (answerList[i].id === 'true') {
+    //             answerList[i].querySelector('p').classList.add('success-quiz-answer-selection');
+      
+    //             if (answerList[i] === answerSelected) correctAnswers++;// Se a resposta correta é igual a selecionada
+    //           }
+    //           else {
+    //             answerList[i].querySelector('p').classList.add('error-quiz-answer-selection');
+    //           }
+    //         }
+      
+    //         // adiciona fundo branco nas resposta não selecionadas
+    //         for (let i = 0; i < coverList.length; i++) {
+    //           if (coverList[i] !== coverSelection) {
+    //             coverList[i].classList.add('unselected');
+    //           }
+    //         }
+      
+    //         if (qtdQuestions === questionList.length) {
+    //           setTimeout(showScore, 2200);
+    //         }
+    //       }
+    //     }
+    //   }
+
+}
+
+function resultadoJogo(){
+    console.log("oooooooooooooooooooooo");
+    Main.innerHTML += `
+    <div>
+        <section class="sessaoResultado">
+        
+            <div class="bannerFinal">
+                <p>${objetoQuizUso.questions[0].title}</p>
+            </div>
+            <div class="resultado">
+                <img src="https://img.freepik.com/fotos-gratis/imagem-aproximada-em-tons-de-cinza-de-uma-aguia-careca-americana-em-um-fundo-escuro_181624-31795.jpg" alt="">
+                <p>Mussum Ipsum, cacilds vidis litro abertis. Não sou faixa preta cumpadi, sou preto inteiris, inteiris.Atirei o pau no gatis, per gatis num morreus.Cevadis im ampola pa arma uma pindureta.Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+            </div>
+                    
+        </section>
+    </div>
+    `
+
 }
 
 // fim das funções de exibição da tela dois dentro de um quizz
