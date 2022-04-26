@@ -201,7 +201,11 @@ function telaCriarExibirQuizz(){
 
     </div>`
     console.log(quizzUsuario())
-    meusQuizzes();
+    
+    if (localStorage.getItem("meusQuizzes")){
+        meusQuizzes();
+    }
+
 }
 
 function quizzUsuario(){
@@ -224,7 +228,7 @@ function quizzUsuario(){
     
         </section>
         `
-       
+        
     }
     else{
         return`
@@ -284,6 +288,7 @@ let injetarQuizz = document.querySelector(".exibirQuizz");
 
 function exibeTodosQuizzes(){
     
+    //aquiii
 
     console.log("exibeTodosQuizzes()")
     let promise = axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
@@ -316,11 +321,11 @@ function meusQuizzes() {
 
     console.log(meusquizzesSerializados)
 
-     const meusquizzes = JSON.parse(meusquizzesSerializados); 
+    const meusquizzes = JSON.parse(meusquizzesSerializados); 
 
-     processa (meusquizzes);
+    processa (meusquizzes);
 
-      
+    
 
       
 
@@ -331,16 +336,34 @@ function processa(meusquizzes) {
 
     let aqui = document.querySelector(".meusquizz")
 
-    console.log("arrow()")
-    
-    console.log(aqui)
-    
-    console.log("arrr")
-    aqui.innerHTML = "";
-    for(let i = 0; i< meusquizzes.length; i++){
-        aqui.innerHTML += cardQuizz(meusquizzes[i]);
+    let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/`)
+
+    let quizzes = []
+
+    console.log(meusquizzes)
+
+    promise.then((response)=>{
+
+        quizzes = response.data;
+
+        for (let i = 0; i < meusquizzes.length; i++){
+
+            const ijetar = quizzes.filter(quizz => quizz.id === meusquizzes[i]);
+
+            console.log(ijetar)
+
+            aqui.innerHTML += cardQuizz(ijetar[0]);
+            
         
-      }
+
+
+        }
+
+        
+
+    })
+
+
 
   }
 
@@ -871,7 +894,7 @@ function tratarSucesso (meuquizz) {
 
     if (!(localStorage.getItem("meusQuizzes"))) {
 
-        meusQuizzes = [meuquizz.data];
+        meusQuizzes = [meuquizz.data.id];
 
     }
     else{
@@ -879,7 +902,7 @@ function tratarSucesso (meuquizz) {
         
         meusQuizzes = JSON.parse(quizzesSerializados);
 
-        meusQuizzes.push(meuquizz.data)
+        meusQuizzes.push(meuquizz.data.id)
 
         
         console.log(meusQuizzes)
@@ -901,7 +924,9 @@ function tratarError (erro) {
 
 function seuQuizzPronto (){
 
-    const meusquizzesSerializados = localStorage.getItem("meusQuizzes"); // Pegando de volta a string armazenada na chave "lista"
+ //aquii
+
+    const meusquizzesSerializados = localStorage.getItem("meusQuizzes"); // Pegando de volta a string armazenada na chave
 
     console.log(meusquizzesSerializados)
 
@@ -910,8 +935,6 @@ function seuQuizzPronto (){
     console.log(meusquizzes)
 
     let id = meusquizzes[meusquizzes.length-1]
-
-    id = Number(id.id) 
 
     let Main = document.querySelector("main");
     
