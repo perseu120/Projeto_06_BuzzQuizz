@@ -4,6 +4,7 @@ let urlQuizz = "";
 let quantidadePerguntas = 0;
 let quantidadeNiveis = 2;
 let res
+let contarAcertos = 0
 
 const Main = document.querySelector(".main");
 let objetoQuizUso;
@@ -523,6 +524,8 @@ function alternativaQuizz(array){
 
 function selecionarResposta(resClicada){
     
+    
+
     contador ++;
 
     let todasResposta = resClicada.parentNode.querySelectorAll("aside");
@@ -531,7 +534,7 @@ function selecionarResposta(resClicada){
         
         if(resClicada !== todasResposta[i]){
             todasResposta[i].querySelector(".fundoBranco").classList.remove("Invisivel");
-            todasResposta[i].classList.add("naoClicavel");
+            
             
         }
 
@@ -543,6 +546,7 @@ function selecionarResposta(resClicada){
         
             todasResposta[i].querySelector("p").style.color= "red";
         }
+        todasResposta[i].classList.add("naoClicavel");
     }
 
     setTimeout(() => {
@@ -551,87 +555,83 @@ function selecionarResposta(resClicada){
 
     }, 2000);
 
+    if (resClicada.id === "true") {
+
+        contarAcertos ++
+        console.log(contarAcertos)
+    }
+
     if(contador === objetoQuizUso.questions.length){
         setTimeout(() => {
-            resultadoJogo();
+            resultadoJogo(contarAcertos,objetoQuizUso.id);
             window.scrollBy(0, 700);
     
         }, 2000);
         
     }
 
-    // function answerSelection(answerSelected, isCorrectAnswer) {
-    //     let documentSection = answerSelected.parentNode;
-    //     documentSection = documentSection.parentNode;
-      
-    //     // se não foi escolhida nenhuma resposta do cartão
-    //     if (!isSelected(documentSection)) {
-    //       // não finalizou ainda
-    //       if (questionList.length <= qtdQuestions) {
-    //         const article = documentSection.parentNode;
-      
-    //         setTimeout(() => {
-    //           let count = 0;
-    //           const interval = setInterval(() => {
-    //             if(article.clientHeight + 26 < count) clearInterval(interval);
-    //             count += 14;
-    //             window.scrollBy(0, 14);
-    //           }, 6);
-    //         }, 2000);
-      
-    //         questionList.push({ question: documentSection, isCorrectAnswer: isCorrectAnswer });
-      
-    //         const coverSelection = answerSelected.querySelector('.white-cover');
-      
-    //         const documentArticle = documentSection.parentNode;
-    //         const coverList = documentArticle.querySelectorAll('.white-cover');
-    //         const answerList = documentSection.querySelectorAll('.answer-quiz'); // mudar para documenteArticle
-      
-    //         // altera cor do text da resposta erradas e certas
-    //         for (let i = 0; i < answerList.length; i++) {
-    //           if (answerList[i].id === 'true') {
-    //             answerList[i].querySelector('p').classList.add('success-quiz-answer-selection');
-      
-    //             if (answerList[i] === answerSelected) correctAnswers++;// Se a resposta correta é igual a selecionada
-    //           }
-    //           else {
-    //             answerList[i].querySelector('p').classList.add('error-quiz-answer-selection');
-    //           }
-    //         }
-      
-    //         // adiciona fundo branco nas resposta não selecionadas
-    //         for (let i = 0; i < coverList.length; i++) {
-    //           if (coverList[i] !== coverSelection) {
-    //             coverList[i].classList.add('unselected');
-    //           }
-    //         }
-      
-    //         if (qtdQuestions === questionList.length) {
-    //           setTimeout(showScore, 2200);
-    //         }
-    //       }
-    //     }
-    //   }
+    
+
 
 }
 
-function resultadoJogo(){
-    console.log("oooooooooooooooooooooo");
+function resultadoJogo(contarAcertos,id){
+
+    contarAcertos = Math.floor((contarAcertos*100) / objetoQuizUso.questions.length)
+
+    let porcentLevels =  objetoQuizUso.levels.map(level => level.minValue);
+
+    porcentLevels = porcentLevels.sort((a, b) => b-a);
+
+    let pare = 0
+    let levelcerto
+
+    for (i = 0; i < objetoQuizUso.levels.length; i++){
+
+        if (contarAcertos >= porcentLevels[i] && pare === 0){
+
+            pare = 1
+            levelcerto = porcentLevels[i]
+
+        }
+
+    }
+
+    console.log(porcentLevels);
+    console.log(levelcerto);
+
+   let essse = objetoQuizUso.levels.filter(level => level.minValue === levelcerto);
+
+
+    console.log(essse);
     Main.innerHTML += `
     <div>
         <section class="sessaoResultado">
         
             <div class="bannerFinal">
-                <p>${objetoQuizUso.questions[0].title}</p>
+                <p>${contarAcertos}% de acerto:${essse[0].title}</p>
             </div>
             <div class="resultado">
-                <img src="https://img.freepik.com/fotos-gratis/imagem-aproximada-em-tons-de-cinza-de-uma-aguia-careca-americana-em-um-fundo-escuro_181624-31795.jpg" alt="">
-                <p>Mussum Ipsum, cacilds vidis litro abertis. Não sou faixa preta cumpadi, sou preto inteiris, inteiris.Atirei o pau no gatis, per gatis num morreus.Cevadis im ampola pa arma uma pindureta.Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                <img src="${essse[0].image}" alt="">
+                <p>${essse[0].text}</p>
             </div>
                     
         </section>
+        
     </div>
+    <button class="ButtomSeuquizzPronto" onClick ="zerandoResultadoJogo(${id})">Reiniciar Quizz</button>
+    <button class="ButtomSeuquizzProntoBranco" onClick ="window.location.reload()">Voltar pra home</button>
     `
+
+}
+
+function zerandoResultadoJogo(id) {
+
+    contarAcertos = 0
+    contador = 0
+
+    criarTelaResponderQuizz(id);
+
 
 }
 
@@ -1057,22 +1057,32 @@ function seuQuizzPronto (){
     let id = meusquizzes[meusquizzes.length-1]
 
     let Main = document.querySelector("main");
+
+    console.log(id)
+
+    let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`)
+
+    promise.then((response)=>{
+        console.log(response)
+        Main.innerHTML = `
+        <h3 class="perguntasH3 margin140">Seu quizz está pronto!</h3>        
+        
+        <section class="Quizz">
     
-    Main.innerHTML = `
-    <h3 class="perguntasH3 margin140">Seu quizz está pronto!</h3>        
+            <div class="exibirQuizz Flex">
     
-    <section class="Quizz">
+                 ${cardQuizzUnico(response.data)}
+                
+            </div>
+    
+        </section>
+        <button class="ButtomSeuquizzPronto" onClick ="criarTelaResponderQuizz(${response.data.id})">Acessar Quizz</button>
+        <button class="ButtomSeuquizzProntoBranco" onClick ="window.location.reload()">Voltar pra home</button>
+        `
 
-        <div class="exibirQuizz Flex">
+    })
 
-             ${cardQuizzUnico(meusquizzes[meusquizzes.length-1])}
-            
-        </div>
-
-    </section>
-    <button class="ButtomSeuquizzPronto" onClick ="criarTelaResponderQuizz(${id})">Acessar Quizz</button>
-    <button class="ButtomSeuquizzProntoBranco" onClick ="telaCriarExibirQuizz()">Voltar pra home</button>
-    `
+   
 }
 
 function cardQuizzUnico(objeto){

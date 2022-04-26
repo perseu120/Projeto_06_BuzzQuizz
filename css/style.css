@@ -63,6 +63,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 166px;
 }
 
 .Invisivel {
@@ -231,6 +232,7 @@ button.irParaPerguntas {
     width: 340px;
     
 }
+
 .box-quizz img {
     
     width: 340px;
@@ -255,6 +257,41 @@ button.irParaPerguntas {
     word-break: normal;
     overflow: hidden;
 }
+
+
+.box-quizzUnico {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 5px;
+    position: relative;
+    width: 500px;
+    height: 266px;
+}
+
+.box-quizzUnico p {
+    bottom: 9px;
+    left: 23px;
+    z-index: 2;
+    position: absolute;
+    width: 301px;
+    height: 54px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 23px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    word-break: normal;
+    overflow: hidden;
+}
+
+
+
+
 
 .gradiente{
     position: absolute;
@@ -491,12 +528,12 @@ button.irParaPerguntas {
 .ButtomSeuquizzProntoBranco {
     width: 220px;
     height: 44px;
-    background: #FAFAFA;
+    background: #E5E5E5;
     margin-bottom: 15px;
     border-radius: 15px;
     font-size: 21px;
     color: #818181;
-    border-color: #FAFAFA;
+    border-color: #E5E5E5;
     border-style: solid;
     box-shadow: none;
 }
