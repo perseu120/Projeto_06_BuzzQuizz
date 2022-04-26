@@ -551,3 +551,24 @@ button.irParaPerguntas {
 .naoClicavel{
     pointer-events: none;
 }
+
+@media (max-width: 714px){
+
+    .Quizz > div {
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .containerQuizz{
+        width: 100%;
+        
+    }
+/* ate aqui tava funcionando na primeira tela */
+    .sessaoPerguntaResposta{
+        width: 100%;
+    }
+ 
+}
