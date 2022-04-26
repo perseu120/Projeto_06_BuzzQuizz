@@ -200,7 +200,6 @@ function telaCriarExibirQuizz(){
                 
 
     </div>`
-    console.log(quizzUsuario())
     
     if (localStorage.getItem("meusQuizzes")){
         meusQuizzes();
@@ -251,8 +250,6 @@ function quizzUsuario(){
 
 function todosQuizz(){
 
-    console.log("todosQuizz")
-
     return  `
     <section class="Quizz">
         <h4>Todos os Quizzes</h4>
@@ -271,8 +268,6 @@ function todosQuizz(){
 
 function cardQuizz(objeto){
 
-    console.log("cardQuizz(objeto)")
-
         return `
         <aside id="${objeto.id}" class="box-quizz" onClick ="criarTelaResponderQuizz(this.id)">
         
@@ -288,9 +283,6 @@ let injetarQuizz = document.querySelector(".exibirQuizz");
 
 function exibeTodosQuizzes(){
     
-    //aquiii
-
-    console.log("exibeTodosQuizzes()")
     let promise = axios.get('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes');
 
     let quizzes = [];
@@ -319,8 +311,6 @@ function meusQuizzes() {
 
     const meusquizzesSerializados = localStorage.getItem("meusQuizzes"); 
 
-    console.log(meusquizzesSerializados)
-
     const meusquizzes = JSON.parse(meusquizzesSerializados); 
 
     processa (meusquizzes);
@@ -340,8 +330,6 @@ function processa(meusquizzes) {
 
     let quizzes = []
 
-    console.log(meusquizzes)
-
     promise.then((response)=>{
 
         quizzes = response.data;
@@ -349,8 +337,6 @@ function processa(meusquizzes) {
         for (let i = 0; i < meusquizzes.length; i++){
 
             const ijetar = quizzes.filter(quizz => quizz.id === meusquizzes[i]);
-
-            console.log(ijetar)
 
             aqui.innerHTML += cardQuizz(ijetar[0]);
             
@@ -558,7 +544,6 @@ function selecionarResposta(resClicada){
     if (resClicada.id === "true") {
 
         contarAcertos ++
-        console.log(contarAcertos)
     }
 
     if(contador === objetoQuizUso.questions.length){
@@ -597,13 +582,9 @@ function resultadoJogo(contarAcertos,id){
 
     }
 
-    console.log(porcentLevels);
-    console.log(levelcerto);
-
    let essse = objetoQuizUso.levels.filter(level => level.minValue === levelcerto);
 
 
-    console.log(essse);
     Main.innerHTML += `
     <div>
         <section class="sessaoResultado">
@@ -697,18 +678,6 @@ function processarPerguntasQuizz() {
         respostaIncorreta3 = Pergunta.querySelector(".respostaIncorreta3").value;
         urlIncorreta3 = Pergunta.querySelector(".urlIncorreta3").value;
 
-
-      //  console.log(textoPergunta) 
-      //  console.log(corFundoPergunta)  
-       // console.log(respostaCorreta)   
-      //  console.log(urlImagemCorreta)
-       // console.log(respostaIncorreta1)
-      //  console.log(urlIncorreta1)
-       // console.log(respostaIncorreta2)
-      //  console.log(urlIncorreta2)
-      //  console.log(respostaIncorreta3)
-       // console.log(urlIncorreta3)
-
         verificarSeInputsValidos ()
 
 
@@ -769,12 +738,9 @@ function processarPerguntasQuizz() {
 
         alert("Algo errado, tente novamente")
         novoQuizz.questions = []
-        console.log(novoQuizz)
-
     }
     else{
 
-        console.log(novoQuizz)
         criarNiveisQuizz()
     }
 
@@ -786,42 +752,36 @@ function verificarSeInputsValidos () {
     if (textoPergunta.length < 20){
 
         ErroPerguntasQuizz = true
-        console.log("erro length")
+   
     }
 
     if (!(/^#[0-9A-F]{6}$/i.test(corFundoPergunta))){
 
         ErroPerguntasQuizz = true
-        
-        console.log("erro hex")
+    
     }
 
     if (respostaCorreta === ""){
 
         ErroPerguntasQuizz = true
-
-        console.log("erro vazio")
     }
 
     if (!(isImgLink(urlImagemCorreta))){
 
         ErroPerguntasQuizz = true
-
-        console.log("erro url")
     }
 
     if (respostaIncorreta1 === ""){
 
         ErroPerguntasQuizz = true
 
-        console.log("erro vazio")
+
     }
 
     if (!(isImgLink(urlIncorreta1))){
 
         ErroPerguntasQuizz = true
 
-        console.log("erro url")
     }
     
     if (respostaIncorreta2 !== "") {
@@ -829,7 +789,7 @@ function verificarSeInputsValidos () {
 
         if(!(isImgLink(urlIncorreta2))){
             ErroPerguntasQuizz = true
-            console.log("erro url2")
+
         }
     }
 
@@ -838,7 +798,7 @@ function verificarSeInputsValidos () {
 
         if(!(isImgLink(urlIncorreta3))){
             ErroPerguntasQuizz = true
-            console.log("erro url3")
+
         }
     }
 
@@ -897,9 +857,8 @@ function abrirCardNivel (Selecionado) {
     Selecionado.classList.remove("PerguntasFechado")
 
     let classe =  Selecionado.classList.value
-    console.log(classe);
+
     numeroNivel= Number(classe.replace('Nivel', ''));
-    console.log(numeroNivel);
 
     Selecionado.classList.add("NiveisAberto")
 
@@ -960,36 +919,30 @@ function finalizaQuizz(){
 
 function validarInputsNiveis () {
 
-    console.log("0")
+
 
     if (tituloNivel.length < 10) {
 
-        console.log("1")
         ErroNivelQuizz = true
     }
 
     if ( 100 < porcenNivel < 0 ) {
-
-        console.log("2")
         ErroNivelQuizz = true
         
     }
 
     if ( !(isImgLink(urlNivel))) {
 
-        console.log("3")
         ErroNivelQuizz = true
     }
 
     if (descricaoNivel < 30) {
 
-        console.log("4")
         ErroNivelQuizz = true
     }
 
     if(Number(porcenNivel) === 0){
 
-        console.log("5")
         CondicaoNivel = true
     }
 
@@ -997,9 +950,6 @@ function validarInputsNiveis () {
 
 function postarQuizz () {
 
-    console.log("entrou")
-    console.log(parateste)
-    console.log(novoQuizz)
     const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes', novoQuizz);
 
     requisicao.then(tratarSucesso);
@@ -1009,7 +959,6 @@ function postarQuizz () {
 
 function tratarSucesso (meuquizz) {
 
-    console.log("deu")
     let meusQuizzes
 
     if (!(localStorage.getItem("meusQuizzes"))) {
@@ -1024,8 +973,6 @@ function tratarSucesso (meuquizz) {
 
         meusQuizzes.push(meuquizz.data.id)
 
-        
-        console.log(meusQuizzes)
     }
     
 
@@ -1038,7 +985,6 @@ function tratarSucesso (meuquizz) {
 
 function tratarError (erro) {
 
-    console.log("n deu, que pena")
     console.log(erro)
 }
 
@@ -1048,22 +994,16 @@ function seuQuizzPronto (){
 
     const meusquizzesSerializados = localStorage.getItem("meusQuizzes"); // Pegando de volta a string armazenada na chave
 
-    console.log(meusquizzesSerializados)
-
     const meusquizzes = JSON.parse(meusquizzesSerializados); // Transformando a string de volta na array original
-
-    console.log(meusquizzes)
 
     let id = meusquizzes[meusquizzes.length-1]
 
     let Main = document.querySelector("main");
 
-    console.log(id)
-
     let promise = axios.get(`https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes/${id}`)
 
     promise.then((response)=>{
-        console.log(response)
+
         Main.innerHTML = `
         <h3 class="perguntasH3 margin140">Seu quizz está pronto!</h3>        
         
